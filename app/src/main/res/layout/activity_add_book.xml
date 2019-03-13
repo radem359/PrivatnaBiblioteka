@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddBook">
+
+    <TextView
+        android:id="@+id/tvAddAWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="27dp"
+        android:text="Dodaj novu knjigu"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/tvAuthorName"
+        android:layout_width="325dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/tvAddAWelcome"
+        android:layout_marginTop="73dp"
+        android:ems="10"
+        android:hint="enter book name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/tbBookDescription"
+        android:layout_width="325dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/tvAddAWelcome"
+        android:layout_marginTop="143dp"
+        android:ems="10"
+        android:hint="book desription"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/btSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="61dp"
+        android:background="@color/colorPrimary"
+        android:text="Sacuvaj"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/spAuthors"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tvAddAWelcome"
+        android:layout_centerVertical="true" />
+
+    <Spinner
+        android:id="@+id/spGenres"
+        android:layout_width="154dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/tvAddAWelcome"
+        android:layout_marginBottom="168dp" />
+
+    <TextView
+        android:id="@+id/tvAuthors"
+        android:layout_width="152dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/tvAddAWelcome"
+        android:layout_marginTop="209dp"
+        android:text="Autori" />
+
+    <TextView
+        android:id="@+id/tvGenres"
+        android:layout_width="154dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/tvAddAWelcome"
+        android:layout_marginBottom="205dp"
+        android:text="Zanrovi" />
+
+</RelativeLayout>

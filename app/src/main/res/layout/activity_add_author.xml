@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddAuthor">
+
+    <TextView
+        android:id="@+id/tvAddAWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="27dp"
+        android:text="Dodaj novog autora"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/tvAuthorName"
+        android:layout_width="325dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/tvAddAWelcome"
+        android:layout_marginTop="73dp"
+        android:ems="10"
+        android:hint="ime autora"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/btSaveAuthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/tvAuthorName"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="149dp"
+        android:background="@color/colorPrimary"
+        android:text="Sacuvaj"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
+
+</RelativeLayout>

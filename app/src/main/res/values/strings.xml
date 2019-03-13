@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Privatna Biblioteka</string>
+    <string name="dobrodosli_u_vasu_privatnu_biblioteku">Dobrodosli u vasu privatnu biblioteku</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
