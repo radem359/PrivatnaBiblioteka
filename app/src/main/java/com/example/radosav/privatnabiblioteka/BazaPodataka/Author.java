@@ -1,6 +1,4 @@
-package com.example.milica.privatnabiblioteka.BazaPodataka;
-
-import java.util.List;
+package com.example.radosav.privatnabiblioteka.BazaPodataka;
 
 public class  Author{
 
@@ -9,7 +7,8 @@ public class  Author{
 
     public Author(){}
 
-    public Author(String authorName) {
+    public Author(String authorName, int _id) {
+        this._id = _id;
         this.authorName = authorName;
     }
 

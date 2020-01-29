@@ -1,6 +1,4 @@
-package com.example.milica.privatnabiblioteka.BazaPodataka;
-
-import java.util.List;
+package com.example.radosav.privatnabiblioteka.BazaPodataka;
 
 public class  Genre{
 
@@ -9,7 +7,8 @@ public class  Genre{
 
     public Genre(){}
 
-    public Genre(String genreName) {
+    public Genre(String genreName, int _id) {
+        this._id = _id;
         this.genreName = genreName;
     }
 

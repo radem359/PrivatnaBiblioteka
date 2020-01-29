@@ -1,4 +1,4 @@
-package com.example.milica.privatnabiblioteka;
+package com.example.radosav.privatnabiblioteka;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.milica.privatnabiblioteka.BazaPodataka.Author;
+import com.example.radosav.privatnabiblioteka.BazaPodataka.Author;
 
 public class UpdateAuthorActivity extends AppCompatActivity {
 
@@ -19,6 +19,7 @@ public class UpdateAuthorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_author);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tvAuthorName = (TextView)findViewById(R.id.tvAuthorName);
         update = (Button) findViewById(R.id.btUpdAuthor);
@@ -31,7 +32,7 @@ public class UpdateAuthorActivity extends AppCompatActivity {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UpdateAuthorActivity.this, MainActivity.class);
+                Intent intent = new Intent(UpdateAuthorActivity.this, AuthorListActivity.class);
 
                 Author author = new Author();
                 author.set_id(authorId);
@@ -46,7 +47,7 @@ public class UpdateAuthorActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UpdateAuthorActivity.this, MainActivity.class);
+                Intent intent = new Intent(UpdateAuthorActivity.this, AuthorListActivity.class);
 
                 Author author = new Author();
                 author.set_id(authorId);

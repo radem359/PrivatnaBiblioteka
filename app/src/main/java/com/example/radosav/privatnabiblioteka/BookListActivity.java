@@ -1,4 +1,4 @@
-package com.example.milica.privatnabiblioteka;
+package com.example.radosav.privatnabiblioteka;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.milica.privatnabiblioteka.BazaPodataka.Book;
+import com.example.radosav.privatnabiblioteka.BazaPodataka.Book;
 
 import java.util.List;
 
@@ -27,19 +27,22 @@ public class BookListActivity extends AppCompatActivity {
     String[] fav;
     String[] idBook;
     String favorite;
-    String[] authors;
-    String[] genres;
+    int[] authors;
+    int[] genres;
+    int positionFromIntent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         System.out.println("U BookListActivity sam");
 
         addButton = (Button) findViewById(R.id.addButton);
         lvBooks = (ListView) findViewById(R.id.lvBooks);
-        int position = Integer.parseInt(getIntent().getStringExtra("position"));
-        if(position == 0) {
+        positionFromIntent = Integer.parseInt(getIntent().getStringExtra("position"));
+        if(positionFromIntent == 0) {
             books = MainActivity.myDbHandler.getAllBooks();
             favorite = "0";
         }else {
@@ -55,8 +58,8 @@ public class BookListActivity extends AppCompatActivity {
         imagePos = new int[books.size()];
         idBook = new String[books.size()];
         fav = new String[books.size()];
-        authors = new String[books.size()];
-        genres = new String[books.size()];
+        authors = new int[books.size()];
+        genres = new int[books.size()];
 
         int i = 0;
         for (Book b:
@@ -72,9 +75,8 @@ public class BookListActivity extends AppCompatActivity {
                 fav[i] = "0";
             }
             idBook[i]= String.valueOf(b.get_id());
-            //System.out.println("Book name is "+b.get_bookName());           System.out.println("Autor knjige je "+b.get_author().getAuthorName());
-            //authors[i] = b.get_author().getAuthorName();
-            //genres[i] = b.get_genre().getGenreName();
+            authors[i] = b.get_author();
+            genres[i] = b.get_genre();
             i++;
         }
 
@@ -82,6 +84,7 @@ public class BookListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intentAddBook = new Intent(BookListActivity.this, AddBook.class);
+                intentAddBook.putExtra("position", ""+positionFromIntent);
                 intentAddBook.putExtra("favorite", favorite);
                 startActivity(intentAddBook);
             }
@@ -126,10 +129,11 @@ public class BookListActivity extends AppCompatActivity {
                    Intent intent = new Intent(BookListActivity.this, UpdateBookActivity.class);
                    intent.putExtra("bookId", idBook[position]);
                    intent.putExtra("bookName", names[position]);
-                    intent.putExtra("bookDesc", descriptions[position]);
+                   intent.putExtra("bookDesc", descriptions[position]);
                    intent.putExtra("image", fav[position]);
-                   //intent.putExtra("author", authors[position]);
-                   //intent.putExtra("genre", genres[position]);
+                   intent.putExtra("author", authors[position]);
+                   intent.putExtra("genre", genres[position]);
+                   intent.putExtra("position",  ""+positionFromIntent);
                    startActivity(intent);
                 }
             });

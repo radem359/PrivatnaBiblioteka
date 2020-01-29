@@ -1,4 +1,4 @@
-package com.example.milica.privatnabiblioteka;
+package com.example.radosav.privatnabiblioteka;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,12 +10,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.milica.privatnabiblioteka.BazaPodataka.Author;
-import com.example.milica.privatnabiblioteka.BazaPodataka.Book;
-import com.example.milica.privatnabiblioteka.BazaPodataka.Genre;
-import com.example.milica.privatnabiblioteka.BazaPodataka.MyDbHandler;
-
-import java.util.List;
+import com.example.radosav.privatnabiblioteka.BazaPodataka.MyDbHandler;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,29 +27,6 @@ public class MainActivity extends AppCompatActivity {
         lvMain = (ListView)findViewById(R.id.lvMain);
 
         CustomAdapter customAdapter = new CustomAdapter();
-
-        /*Author author = new Author("George R R Martin");
-        Genre genre = new Genre("Fantazija");
-
-        List<Author> authors =  myDbHandler.getAllAuthors();
-        List<Genre> genres =  myDbHandler.getAllGenres();
-
-        if(authors.isEmpty()){
-            myDbHandler.addAuthor(author);
-        }
-        if(genres.isEmpty()){
-            myDbHandler.addGenre(genre);
-        }
-
-        Book bookSample = new Book("Pesma leda i vatre", "Najjaci serijal knjiga ikad", true, author, genre);
-
-
-        List<Book> books =  myDbHandler.getAllBooks();
-
-        if(books.isEmpty()){
-            myDbHandler.addBook(bookSample);
-        }*/
-
 
         lvMain.setAdapter(customAdapter);
     }
@@ -107,9 +79,6 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-
-
-
             return convertView;
         }
     }

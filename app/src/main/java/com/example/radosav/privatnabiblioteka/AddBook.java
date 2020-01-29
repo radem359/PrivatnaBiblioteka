@@ -1,4 +1,4 @@
-package com.example.milica.privatnabiblioteka;
+package com.example.radosav.privatnabiblioteka;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +9,9 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.milica.privatnabiblioteka.BazaPodataka.Author;
-import com.example.milica.privatnabiblioteka.BazaPodataka.Book;
-import com.example.milica.privatnabiblioteka.BazaPodataka.Genre;
+import com.example.radosav.privatnabiblioteka.BazaPodataka.Author;
+import com.example.radosav.privatnabiblioteka.BazaPodataka.Book;
+import com.example.radosav.privatnabiblioteka.BazaPodataka.Genre;
 
 import java.util.List;
 
@@ -24,6 +24,7 @@ public class AddBook extends AppCompatActivity {
     List<Genre> genres;
     String[] genreNames;
     String fav;
+    String positionFromIntent;
 
     Button btnSave;
 
@@ -31,10 +32,13 @@ public class AddBook extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         System.out.println("U AddBooku sam");
         authors = MainActivity.myDbHandler.getAllAuthors();
         authorNames = new  String[authors.size()];
         fav = getIntent().getStringExtra("favorite");
+        positionFromIntent = getIntent().getStringExtra("position");
         int i = 0;
         for (Author a:
                 authors) {
@@ -66,11 +70,11 @@ public class AddBook extends AppCompatActivity {
         myGenreAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spGenres.setAdapter(myGenreAdapter);
 
-
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddBook.this, MainActivity.class);
+                Intent intent = new Intent(AddBook.this, BookListActivity.class);
+                intent.putExtra("position", positionFromIntent);
                 Book book = new Book();
                 book.set_bookName(tvBookName.getText().toString().trim());
                 book.set_bookDescription(tbBookDescription.getText().toString().trim());
@@ -81,22 +85,23 @@ public class AddBook extends AppCompatActivity {
 
                 Author author = null;
                 if(spAuthors.getSelectedItem() != null)
-                 author = MainActivity.myDbHandler.getAuthorByName(spAuthors.getSelectedItem().toString());
+                    author = MainActivity.myDbHandler.getAuthorByName(spAuthors.getSelectedItem().toString());
                 if(author != null){
-                    book.set_author(author);
+                    book.set_author(author.get_id());
                 }
 
                 Genre genre = null;
                 if(spGenres.getSelectedItem() != null)
                     genre = MainActivity.myDbHandler.getGenreByName(spGenres.getSelectedItem().toString());
                 if(genre != null){
-                    book.set_genre(genre);
+                    book.set_genre(genre.get_id());
                 }
 
                 MainActivity.myDbHandler.addBook(book);
                 startActivity(intent);
             }
         });
+
 
     }
 }

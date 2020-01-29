@@ -1,4 +1,4 @@
-package com.example.milica.privatnabiblioteka;
+package com.example.radosav.privatnabiblioteka;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.milica.privatnabiblioteka.BazaPodataka.Author;
+import com.example.radosav.privatnabiblioteka.BazaPodataka.Author;
 
 import java.util.List;
 
@@ -27,6 +27,7 @@ public class AuthorListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_author_list);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         btAddAuth = (Button) findViewById(R.id.btAddAuth);
         lvAuthors = (ListView) findViewById(R.id.lvAuthors);

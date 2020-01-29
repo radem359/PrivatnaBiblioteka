@@ -1,19 +1,13 @@
-package com.example.milica.privatnabiblioteka;
+package com.example.radosav.privatnabiblioteka;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.milica.privatnabiblioteka.BazaPodataka.Author;
-import com.example.milica.privatnabiblioteka.BazaPodataka.Book;
-import com.example.milica.privatnabiblioteka.BazaPodataka.Genre;
-
-import java.util.List;
+import com.example.radosav.privatnabiblioteka.BazaPodataka.Author;
 
 public class AddAuthor extends AppCompatActivity {
 
@@ -25,14 +19,16 @@ public class AddAuthor extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_author);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tvAuthorName = (TextView)findViewById(R.id.tvAuthorName);
         btSaveAuthor = (Button) findViewById(R.id.btSaveAuthor);
 
+
         btSaveAuthor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddAuthor.this, MainActivity.class);
+                Intent intent = new Intent(AddAuthor.this, AuthorListActivity.class);
 
                 Author author = new Author();
                 author.setAuthorName(tvAuthorName.getText().toString().trim());

@@ -1,6 +1,4 @@
-package com.example.milica.privatnabiblioteka.BazaPodataka;
-
-import java.util.List;
+package com.example.radosav.privatnabiblioteka.BazaPodataka;
 
 public class Book {
 
@@ -8,8 +6,8 @@ public class Book {
     private String _bookName;
     private String _bookDescription;
     private boolean _favorite;
-    private Author _author;
-    private Genre _genre;
+    private int _authorId;
+    private int _genreId;
 
     public Book(){}
 
@@ -19,12 +17,12 @@ public class Book {
         this._favorite = favorite;
     }
 
-    public Book(String _bookName, String _bookDescription, boolean _favorite, Author _author, Genre _genre) {
+    public Book(String _bookName, String _bookDescription, boolean _favorite, int _authorId, int _genreId) {
         this._bookName = _bookName;
         this._bookDescription = _bookDescription;
         this._favorite = _favorite;
-        this._author = _author;
-        this._genre = _genre;
+        this._authorId = _authorId;
+        this._genreId = _genreId;
     }
 
     public int get_id() {
@@ -59,19 +57,19 @@ public class Book {
         this._favorite = _favorite;
     }
 
-    public Author get_author() {
-        return _author;
+    public int get_author() {
+        return _authorId;
     }
 
-    public void set_author(Author _author) {
-        this._author = _author;
+    public void set_author(int _author) {
+        this._authorId = _author;
     }
 
-    public Genre get_genre() {
-        return _genre;
+    public int get_genre() {
+        return _genreId;
     }
 
-    public void set_genre(Genre _genre) {
-        this._genre = _genre;
+    public void set_genre(int _genre) {
+        this._genreId = _genre;
     }
 }

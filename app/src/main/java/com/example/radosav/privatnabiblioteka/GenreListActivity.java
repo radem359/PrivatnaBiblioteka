@@ -1,4 +1,4 @@
-package com.example.milica.privatnabiblioteka;
+package com.example.radosav.privatnabiblioteka;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.milica.privatnabiblioteka.BazaPodataka.Genre;
+import com.example.radosav.privatnabiblioteka.BazaPodataka.Genre;
 
 import java.util.List;
 
@@ -27,6 +27,7 @@ public class GenreListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_genre_list);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         btAddGenre = (Button) findViewById(R.id.btAddGenre);
         lvGenres = (ListView) findViewById(R.id.lvGenres);

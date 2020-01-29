@@ -1,13 +1,10 @@
-package com.example.milica.privatnabiblioteka.BazaPodataka;
+package com.example.radosav.privatnabiblioteka.BazaPodataka;
 
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.renderscript.ScriptIntrinsicYuvToRGB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,16 +81,10 @@ public class MyDbHandler extends SQLiteOpenHelper{
         }else{
             values.put(COLUMN_BOOK_FAVORITE, 0);
         }
-        Author author = book.get_author();
-        if(author != null) {
-            System.err.println("!!!!!!!!!!!!!!!!!!SACUVANO!!!!!!!!!!!!!!");
-            values.put(COLUMN_BOOK_AUTHOR_ID, author.get_id());
-        }
 
-        Genre genre = book.get_genre();
-        if(genre != null) {
-            values.put(COLUMN_BOOK_GENRE_ID, genre.get_id());
-        }
+        values.put(COLUMN_BOOK_AUTHOR_ID, book.get_author());
+
+        values.put(COLUMN_BOOK_GENRE_ID, book.get_genre());
 
         db.insert(TABLE_BOOK, null, values);
         db.close();
@@ -164,17 +155,11 @@ public class MyDbHandler extends SQLiteOpenHelper{
         }else{
             values.put(COLUMN_BOOK_FAVORITE, 0);
         }
-        Author author = book.get_author();
-        if(author != null) {
-            System.err.println("!!!!!!!!!!!!!!!!!!UPDATOVANO!!!!!!!!!!!!!!");
-            values.put(COLUMN_BOOK_AUTHOR_ID, author.get_id());
-        }
+        int author = book.get_author();
+        values.put(COLUMN_BOOK_AUTHOR_ID, author);
 
-        Genre genre = book.get_genre();
-        if(genre != null) {
-            values.put(COLUMN_BOOK_GENRE_ID, genre.get_id());
-        }
-        // updating row
+        int genre = book.get_genre();
+        values.put(COLUMN_BOOK_GENRE_ID, genre);
         db.update(TABLE_BOOK, values, COLUMN_BOOK_ID + " = "+book.get_id(), null);
     }
 
@@ -190,21 +175,9 @@ public class MyDbHandler extends SQLiteOpenHelper{
         else
             book.set_favorite(false);
 
-        Author author = null;
-        if(cursor.getString(4) != null) {
-            author = getAuthorById(Integer.parseInt(cursor.getString(4)));
-            System.out.println("CURSOR 4 != NULL");
-        }
-        if(author != null)
-            book.set_author(author);
+        book.set_author(cursor.getInt(4));
 
-        Genre genre = null;
-        if(cursor.getString(5) != null) {
-            genre = getGenreById(Integer.parseInt(cursor.getString(5)));
-            System.out.println("CURSOR 5 != NULL");
-        }
-        if(genre != null)
-            book.set_genre(genre);
+        book.set_genre(cursor.getInt(5));
 
         return book;
     }
@@ -234,51 +207,33 @@ public class MyDbHandler extends SQLiteOpenHelper{
         return listOfAuthors;
     }
 
-    /*public Author getAuthorById(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Author author = null;
-        Cursor cursor = db.query(TABLE_AUTHOR, new String[] { COLUMN_AUTHOR_ID,
-                        COLUMN_AUTHOR_NAME }, COLUMN_AUTHOR_ID + "= ?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
-        System.out.println("Author id is "+id);
-        if (cursor != null && cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            System.out.println("Author id is "+cursor.getString(cursor.getColumnIndex(COLUMN_AUTHOR_ID)));
-            author = new Author(cursor.getString(cursor.getColumnIndex(COLUMN_AUTHOR_NAME)));
-            System.out.println("AUTHR NAME IS " + author.getAuthorName());
-            cursor.close();
+    public Author getAuthorById(int idAuthor) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selectQuery = "SELECT * FROM "+TABLE_AUTHOR+" WHERE "+COLUMN_AUTHOR_ID+" = "+idAuthor;
+
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{});
+
+        Author author = new Author();
+        if(cursor.moveToFirst()){
+            author.set_id(idAuthor);
+            author.setAuthorName(cursor.getString(1));
         }
         db.close();
         return author;
-    }*/
-
-    public Author getAuthorById(int idAuthor) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Author a = null;
-        Cursor cursor = db.query(TABLE_AUTHOR, new String[] { COLUMN_AUTHOR_ID,
-                        COLUMN_AUTHOR_NAME}, COLUMN_AUTHOR_ID + "=?",
-                new String[] { String.valueOf(idAuthor) }, null, null, null, null);
-        if (cursor != null) {
-            System.out.println("CURSOR JESTE RAZLICIT!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            if(cursor.moveToFirst()){
-                System.out.println("!!!!!!!!!!!!!!!!!!!!!!moveToFirst!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                a = new Author(cursor.getString(1));
-            }
-        }
-        return a;
     }
 
     public Author getAuthorByName(String authorName) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Author author = null;
-        Cursor cursor = db.query(TABLE_AUTHOR, new String[] { COLUMN_AUTHOR_ID,
-                        COLUMN_AUTHOR_NAME }, COLUMN_AUTHOR_NAME + "= ?",
-                new String[] { authorName }, null, null, null, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-            author = new Author(cursor.getString(1));
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selectQuery = "SELECT * FROM "+TABLE_AUTHOR+" WHERE "+COLUMN_AUTHOR_NAME+" = '"+authorName+"'";
+
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{});
+
+        Author author = new Author();
+        if(cursor.moveToFirst()){
+            author.set_id(cursor.getInt(0));
+            author.setAuthorName(cursor.getString(1));
         }
-        cursor.close();
+        db.close();
         return author;
     }
 
@@ -331,28 +286,32 @@ public class MyDbHandler extends SQLiteOpenHelper{
     }
 
     public Genre getGenreById(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Genre genre = null;
-        Cursor cursor = db.query(TABLE_GENRE, new String[] { COLUMN_GENRE_ID,
-                        COLUMN_GENRE_NAME }, COLUMN_GENRE_ID + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
-        if (cursor != null && cursor.moveToFirst())
-            genre = new Genre(cursor.getString(1));
-        cursor.close();
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selectQuery = "SELECT * FROM "+TABLE_GENRE+" WHERE "+COLUMN_GENRE_ID+" = "+id;
+
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{});
+
+        Genre genre = new Genre();
+        if(cursor.moveToFirst()){
+            genre.set_id(id);
+            genre.setGenreName(cursor.getString(1));
+        }
+        db.close();
         return genre;
     }
 
     public Genre getGenreByName(String genreName) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Genre genre = null;
-        Cursor cursor = db.query(TABLE_GENRE, new String[] { COLUMN_GENRE_ID,
-                        COLUMN_GENRE_NAME }, COLUMN_GENRE_NAME + "= ?",
-                new String[] { genreName }, null, null, null, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-            genre = new Genre(cursor.getString(1));
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selectQuery = "SELECT * FROM "+TABLE_GENRE+" WHERE "+COLUMN_GENRE_NAME+" = '"+genreName+"'";
+
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{});
+
+        Genre genre = new Genre();
+        if(cursor.moveToFirst()){
+            genre.set_id(cursor.getInt(0));
+            genre.setGenreName(cursor.getString(1));
         }
-        cursor.close();
+        db.close();
         return genre;
     }
 

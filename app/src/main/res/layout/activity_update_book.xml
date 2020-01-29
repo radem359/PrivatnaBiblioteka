@@ -6,14 +6,62 @@
     android:layout_height="match_parent"
     tools:context=".UpdateBookActivity">
 
+    <TextView
+        android:id="@+id/zanrKnjigeId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="275dp"
+        android:layout_marginLeft="275dp"
+        android:layout_marginTop="372dp"
+        android:text="Zanr knjige" />
+
+    <TextView
+        android:id="@+id/autorKnjigeId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="275dp"
+        android:layout_marginLeft="275dp"
+        android:layout_marginTop="250dp"
+        android:text="Autor knjige" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="275dp"
+        android:layout_marginLeft="275dp"
+        android:layout_marginTop="312dp"
+        android:text="Zanr knjige je:" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="275dp"
+        android:layout_marginLeft="275dp"
+        android:layout_marginTop="215dp"
+        android:text="Autor knjige je:" />
+
     <Button
         android:id="@+id/btUpdateBook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="45dp"
-        android:layout_marginStart="66dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="70dp"
+        android:layout_marginBottom="81dp"
         android:background="@color/colorPrimary"
         android:text="update"
         android:textColor="#FFFFFF" />
@@ -22,8 +70,8 @@
         android:id="@+id/btDeleteBook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/btUpdateBook"
+        android:layout_alignParentEnd="true"
         android:layout_marginEnd="67dp"
         android:background="@color/colorPrimary"
         android:text="Obrisi"
@@ -43,8 +91,8 @@
         android:id="@+id/tvUpdBookName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/textView2"
+        android:layout_alignParentTop="true"
         android:layout_marginTop="51dp"
         android:ems="10"
         android:inputType="textPersonName" />
@@ -53,8 +101,8 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/textView2"
+        android:layout_alignParentTop="true"
         android:layout_marginTop="116dp"
         android:text="Opis" />
 
@@ -62,8 +110,8 @@
         android:id="@+id/tbUpdBookDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/textView2"
+        android:layout_alignParentTop="true"
         android:layout_marginTop="146dp"
         android:ems="10"
         android:inputType="textPersonName" />
@@ -72,8 +120,8 @@
         android:id="@+id/ivFav"
         android:layout_width="65dp"
         android:layout_height="67dp"
-        android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/textView2"
+        android:layout_alignParentEnd="true"
         android:layout_marginEnd="30dp"
         app:srcCompat="@drawable/favorite" />
 
@@ -81,43 +129,37 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/textView2"
+        android:layout_alignParentTop="true"
         android:layout_marginTop="215dp"
-        android:text="Autori" />
+        android:text="Svi autori" />
 
     <Spinner
         android:id="@+id/spUpdAuthors"
-        android:layout_width="217dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/textView2"
-        android:layout_centerVertical="true" />
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="250dp" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/textView2"
-        android:layout_marginBottom="203dp"
-        android:text="Zanrovi" />
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="312dp"
+        android:text="Svi zanrovi" />
 
     <Spinner
         android:id="@+id/spUpdGenres"
-        android:layout_width="218dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/textView2"
-        android:layout_marginBottom="163dp" />
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="367dp" />
 
-    <Button
-        android:id="@+id/btMore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/tbUpdBookDescription"
-        android:layout_marginEnd="18dp"
-        android:background="@color/colorPrimary"
-        android:text="+ Dodatno"
-        android:textColor="#FFFFFF" />
 </RelativeLayout>

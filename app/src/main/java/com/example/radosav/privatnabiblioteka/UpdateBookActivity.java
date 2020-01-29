@@ -1,67 +1,59 @@
-package com.example.milica.privatnabiblioteka;
+package com.example.radosav.privatnabiblioteka;
 
 import android.content.Intent;
-import android.media.Image;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.milica.privatnabiblioteka.BazaPodataka.Author;
-import com.example.milica.privatnabiblioteka.BazaPodataka.Book;
-import com.example.milica.privatnabiblioteka.BazaPodataka.Genre;
+import com.example.radosav.privatnabiblioteka.BazaPodataka.Author;
+import com.example.radosav.privatnabiblioteka.BazaPodataka.Book;
+import com.example.radosav.privatnabiblioteka.BazaPodataka.Genre;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
-import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.List;
 
 public class UpdateBookActivity extends AppCompatActivity {
 
-    TextView tvBookName, tbBookDescription;
+    TextView tvBookName, tbBookDescription, autorKnjigeId, zanrKnjigeId;
     Spinner spAuthors, spGenres;
     List<Author> authors;
     String[] authorNames;
     List<Genre> genres;
     String[] genreNames;
     ImageView ivFav;
-    Button btUpdateBook, btDeleteBook, btMoreInformation;
+    Button btUpdateBook, btDeleteBook;
     boolean fav;
     int bookId;
-    String podaci;
+    String positionFromIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_book);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         authors = MainActivity.myDbHandler.getAllAuthors();
-        authorNames = new  String[authors.size()];
-        String author = getIntent().getStringExtra("author");
-        int i = 0;
+        authorNames = new String[authors.size()+1];
+        authorNames[0] = "";
+        positionFromIntent = getIntent().getStringExtra("position");
+        int i = 1;
         for (Author a:
                 authors) {
-            //if(i = 0)
-            //authorNames[i] = author;
             authorNames[i] = a.getAuthorName();
             i++;
         }
 
         genres = MainActivity.myDbHandler.getAllGenres();
-        genreNames = new String[genres.size()];
-        String genre = getIntent().getStringExtra("genre");
-        i = 0;
+        genreNames = new String[genres.size()+1];
+        genreNames[0] = "";
+        i = 1;
         for (Genre a:
                 genres) {
-            //if(i = 0)
-            //genreNames[i] = genre;
             genreNames[i] = a.getGenreName();
             i++;
         }
@@ -70,21 +62,58 @@ public class UpdateBookActivity extends AppCompatActivity {
 
         btUpdateBook = (Button) findViewById(R.id.btUpdateBook);
         btDeleteBook = (Button) findViewById(R.id.btDeleteBook);
-        btMoreInformation = (Button) findViewById(R.id.btMore);
         tvBookName = (TextView) findViewById(R.id.tvUpdBookName);
         tbBookDescription = (TextView) findViewById(R.id.tbUpdBookDescription);
         spAuthors = (Spinner) findViewById(R.id.spUpdAuthors);
         spGenres = (Spinner) findViewById(R.id.spUpdGenres);
         ivFav = (ImageView)findViewById(R.id.ivFav);
-
+        autorKnjigeId = (TextView)findViewById(R.id.autorKnjigeId);
+        zanrKnjigeId = (TextView)findViewById(R.id.zanrKnjigeId);
 
         final ArrayAdapter<String> myAuthorAdapter = new ArrayAdapter<String>(UpdateBookActivity.this, android.R.layout.simple_list_item_1, authorNames);
         myAuthorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spAuthors.setAdapter(myAuthorAdapter);
+        spAuthors.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(parent.getItemAtPosition(position) != "") {
+                    String selectedItemText = (String) parent.getItemAtPosition(position);
+                    autorKnjigeId.setText(selectedItemText);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        int autorId = getIntent().getIntExtra("author", 0);
+        Author autor = MainActivity.myDbHandler.getAuthorById(autorId);
+        autorKnjigeId.setText(autor.getAuthorName());
 
         ArrayAdapter<String> myGenreAdapter = new ArrayAdapter<String>(UpdateBookActivity.this, android.R.layout.simple_list_item_1, genreNames);
         myGenreAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spGenres.setAdapter(myGenreAdapter);
+        spGenres.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(parent.getItemAtPosition(position) != "") {
+                    String selectedItemText = (String) parent.getItemAtPosition(position);
+                    zanrKnjigeId.setText(selectedItemText);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        int zanrId = getIntent().getIntExtra("genre", 0);
+        final Genre zanr = MainActivity.myDbHandler.getGenreById(zanrId);
+        zanrKnjigeId.setText(zanr.getGenreName());
+
 
         String name = getIntent().getStringExtra("bookName");
         tvBookName.setText(name);
@@ -121,12 +150,23 @@ public class UpdateBookActivity extends AppCompatActivity {
         btUpdateBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UpdateBookActivity.this, MainActivity.class);
+                Intent intent = new Intent(UpdateBookActivity.this, BookListActivity.class);
+                intent.putExtra("position", positionFromIntent);
+
                 Book book = new Book();
                 book.set_id(bookId);
                 book.set_bookName(tvBookName.getText().toString().trim());
                 book.set_bookDescription(tbBookDescription.getText().toString().trim());
                 book.set_favorite(fav);
+
+                Author author = new Author();
+                if(spAuthors.getSelectedItem() != null)
+                    author = MainActivity.myDbHandler.getAuthorByName(autorKnjigeId.getText().toString());
+                book.set_author(author.get_id());
+                Genre genre = new Genre();
+                if(spGenres.getSelectedItem() != null)
+                    genre = MainActivity.myDbHandler.getGenreByName(zanrKnjigeId.getText().toString());
+                book.set_genre(genre.get_id());
 
                 MainActivity.myDbHandler.updateBook(book);
                 startActivity(intent);
@@ -136,7 +176,8 @@ public class UpdateBookActivity extends AppCompatActivity {
         btDeleteBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UpdateBookActivity.this, MainActivity.class);
+                Intent intent = new Intent(UpdateBookActivity.this, BookListActivity.class);
+                intent.putExtra("position", positionFromIntent);
                 Book book = new Book();
                 book.set_id(bookId);
                 book.set_bookName(tvBookName.getText().toString().trim());
@@ -148,16 +189,6 @@ public class UpdateBookActivity extends AppCompatActivity {
             }
         });
 
-        btMoreInformation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(UpdateBookActivity.this, BookApiActivity.class);
-                intent.putExtra("bookName", tvBookName.getText().toString());
-                intent.putExtra("authorName", spAuthors.getSelectedItem().toString());
-                intent.putExtra("genreName", spGenres.getSelectedItem().toString());
-                startActivity(intent);
-            }
-        });
 
     }
 

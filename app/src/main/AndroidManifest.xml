@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.milica.privatnabiblioteka">
-
-    <uses-permission android:name="android.permission.INTERNET" />
+    package="com.example.radosav.privatnabiblioteka">
 
     <application
         android:allowBackup="true"
@@ -11,29 +9,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.example.radosav.privatnabiblioteka.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BookListActivity">
+        <activity android:name="com.example.radosav.privatnabiblioteka.BookListActivity" android:parentActivityName="com.example.radosav.privatnabiblioteka.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AuthorListActivity" />
-        <activity android:name=".GenreListActivity" />
-        <activity android:name=".AddBook" />
-        <activity android:name=".UpdateBookActivity" />
-        <activity android:name=".AddAuthor" />
-        <activity android:name=".UpdateAuthorActivity" />
-        <activity android:name=".UpdateGenreActivity" />
-        <activity android:name=".AddGenre" />
-        <activity android:name=".BookApiActivity"></activity>
+        <activity android:name="com.example.radosav.privatnabiblioteka.AuthorListActivity" android:parentActivityName="com.example.radosav.privatnabiblioteka.MainActivity"/>
+        <activity android:name="com.example.radosav.privatnabiblioteka.GenreListActivity" android:parentActivityName="com.example.radosav.privatnabiblioteka.MainActivity"/>
+        <activity android:name="com.example.radosav.privatnabiblioteka.AddBook" android:parentActivityName="com.example.radosav.privatnabiblioteka.MainActivity"/>
+        <activity android:name="com.example.radosav.privatnabiblioteka.UpdateBookActivity" android:parentActivityName="com.example.radosav.privatnabiblioteka.MainActivity"/>
+        <activity android:name="com.example.radosav.privatnabiblioteka.AddAuthor" android:parentActivityName="com.example.radosav.privatnabiblioteka.MainActivity"/>
+        <activity android:name="com.example.radosav.privatnabiblioteka.UpdateAuthorActivity" android:parentActivityName="com.example.radosav.privatnabiblioteka.MainActivity"/>
+        <activity android:name="com.example.radosav.privatnabiblioteka.UpdateGenreActivity" android:parentActivityName="com.example.radosav.privatnabiblioteka.MainActivity"/>
+        <activity android:name="com.example.radosav.privatnabiblioteka.AddGenre" android:parentActivityName="com.example.radosav.privatnabiblioteka.MainActivity"/>
     </application>
 
 </manifest>
